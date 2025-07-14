@@ -7,7 +7,7 @@ From our paper Accurate and Diverse Antibody Specific Inverse Folding with Discr
 Paper link: 
 
 
-AntiDIF is built on top of RL-DIF (link to codebase) 
+AntiDIF is built on top of RL-DIF https://github.com/flagshippioneering/pi-rldif
 
 See tutorial.ipynb for a minimal example walkthrough
 
@@ -16,7 +16,7 @@ See tutorial.ipynb for a minimal example walkthrough
 # Quick start 
 
 ## Install 
-Clone the repo and create an environment (See requirements in RL-DIF)
+Clone the repo and create an environment (See requirements in RL-DIF, https://github.com/flagshippioneering/pi-rldif)
 
 ## Inference on example data
 In the pi-rldif-ft directory simply run: 
@@ -66,7 +66,7 @@ Note setting dif_large=True or not providing a m_name will load the base RLDIF w
 ## Creating a csv for running inference with custom inputs
  
 To run inference on custom inputs, a CSV file that gives the PDB paths is required.
-An example of what this CSV file looks like is given by data/raw_data/sab_test_hpc.csv. And data/raw_data/sab_example_hpc. Note that the PDB files the CSV points to only have the heavy and light chain of the antibodies thus, the 2nd row (that tells the model what chains to process) for the PDB IDs in the CSV is ‘all‘, indicating that the model will consider all chains in the PDB file. It is recommended that your PDB files be formatted in the same way. As an example, see data/raw_data/7yxu.pdb.
+An example of what this CSV file looks like is given by data/raw_data/sab_test_hpc.csv. And data/raw_data/example.csv. Note that the PDB files the CSV points to only have the heavy and light chain of the antibodies thus, the 2nd row (that tells the model what chains to process) for the PDB IDs in the CSV is ‘all‘, indicating that the model will consider all chains in the PDB file. It is recommended that your PDB files be formatted in the same way. As an example, see data/raw_data/7yxu.pdb.
 
 Once you have created your custom CSV set the path to it in config.yaml under custom_pdb_input. Then for inference, from the pi-rldif-ft folder run:
 
