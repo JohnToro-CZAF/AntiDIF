@@ -1,0 +1,94 @@
+name: antidif_inference
+protein_mpnn: False 
+rldif: True
+esmif: False
+dif_large: False
+temp: False
+docker: False
+inference: True #n.b inf mode, 
+
+undersample_mult: 5.0 #n.b added fraction of oas data relative to sabdab. 
+m_name: ../AntiDIF_model.ckpt #/Users/nik/Documents/tf_ox/code/final_repos/AntiDIF/model.ckpt
+
+free_positions: False
+num_samples: 4
+
+pifold_model:
+    T: 150
+    t_delta: 1
+    diffusion_mode: True
+    num_categories: 20
+
+    network:
+        node_features: 128
+        edge_features: 128
+        hidden_dim: 128
+        dropout: 0.1
+        num_encoder_layers: 10
+        k_neighbors: 30
+        virtual_num: 3
+        node_dist: True
+        node_angle: True
+        node_direct: True
+        edge_dist: True
+        edge_angle: True
+        edge_direct: True
+        updating_edges: 4
+        diffusion_mode: True
+        
+train:
+    n_epochs: 1000 
+    sampling_size: 8
+
+    data:
+        batch_size_per_gpu: 16 #n.b. upper  100-300 gpu mem
+        n_workers: 1
+
+    lr:
+        #lr: 0.00009261139159441371
+        #lr: 0.0000705042
+        lr: 0.001
+        schedule: poly
+        gamma: 2
+        warmup_steps: 1000
+
+    opt:
+        optimizer: adamW
+
+    precision: 32
+    float32_matmul_precision: highest
+
+    verbosity: 20
+
+    checkpointing:
+        n_best_to_save: 5
+        save_every_n_epochs: null
+        metric: "epoch_test"
+        mode: "min"
+
+    ema: 0.999
+    log_path: "/homes/branson/inv_folding/AbRlDif/pi-rldif-ft/models/"
+model_mpnn:
+    hidden_dim: 128
+    num_layers: 3
+    backbone_noise: 0.0
+    dropout: 0.0
+    k_neighbors: 48
+    alphabet: "ACDEFGHIKLMNPQRSTVWYX"
+
+    temperature: 0.5
+    true_sample_prob: 0.0
+    balanced_sampling: False
+    simulated_balanced_sampling: False
+
+data:
+    load_pkl: null #'data/raw_data/example_ds.pkl' #(str fpath) n.b. option to load data from pkl
+    dataset_name: 'example'
+    split_name: 'example'
+    #custom_pdb_input: "/home/pi-user/pdb_path/input_file.csv" #my_dev_inps sab_train_hpc
+    custom_pdb_input: 'data/raw_data/example.csv' #"/homes/branson/inv_folding/AbRlDif/pi-rldif-ft/data/raw_data/sab_test_hpc.csv"  #sab_test_hpc
+    #custom_pdb_input: "input.csv"
+    train_pdb_input: "/homes/branson/inv_folding/AbRlDif/pi-rldif-ft/data/raw_data/all_hpc.csv" #all_hpc
+    val_pdb_input: "/homes/branson/inv_folding/AbRlDif/pi-rldif-ft/data/raw_data/sab_val_hpc.csv" 
+    test_pdb_input: "/homes/branson/inv_folding/AbRlDif/pi-rldif-ft/data/raw_data/sab_val_hpc.csv" #sab_test_hpc
+
