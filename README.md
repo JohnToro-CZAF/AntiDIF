@@ -4,7 +4,7 @@ Code for AntiDIF **A**ntibody-specific discrete **D**iffusion for **I**nverse **
 
 From our paper Accurate and Diverse Antibody Specific Inverse Folding with Discrete Diffusion.
 
-Paper link: 
+Paper link: https://www.biorxiv.org/content/10.1101/2025.07.12.664553v1
 
 
 AntiDIF is built on top of RL-DIF https://github.com/flagshippioneering/pi-rldif
