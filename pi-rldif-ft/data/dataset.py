@@ -138,6 +138,7 @@ class RLDIFDataset(Dataset):
         #here chain is list with each chain of intrest
         elif len(chain) > 1:
             data = [model[c] for c in chain]
+            print("len of data", len(data))
             chain_letter = "_".join([c for c in chain])
             print(chain_letter)
         else:

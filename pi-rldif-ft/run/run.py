@@ -278,15 +278,25 @@ def test(config, model, dataloader, split_name, foldfunction = None):
         #     plt.show()
 
 if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser()
+    # parser.add_argument('--pdb_path', type=str, default='data/raw_data/example.csv')
+    parser.add_argument('--csv_path', type=str, default='data/raw_data/example.csv')
+    parser.add_argument('--pdb_path', type=str, default='data/raw_data/7yxu.pdb')
+    parser.add_argument('--chain_ids', type=str, default='HL')
+    sub_args = parser.parse_args()
     args = load_config('./configs/config.yaml')
 
     if args.docker is True:
         pdb_base_path = os.environ.get('PDB_BASE_PATH', '/usr/src/app/input_files/')
         args = load_config(pdb_base_path + 'config.yaml')
-        args.data.custom_pdb_input = pdb_base_path + args.data.custom_pdb_input
         args.data.docker = True
     else:
         args.data.docker = False
+    
+    args.data.custom_pdb_input = sub_args.csv_path
+    with open(sub_args.csv_path, 'w') as f:
+        f.write(f"{sub_args.pdb_path},{sub_args.chain_ids}")
 
     if sum([args.rldif, args.dif_large, args.esmif, args.protein_mpnn]) != 1:
         raise ValueError("Exactly one model must be selected.")
